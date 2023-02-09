@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
     "dev" : "ts-node-dev index.ts",
-    "calculateBmi": "ts-node bmiCalculator.ts",
-    "calculateExercises": "ts-node exerciseCalculator.ts"
+    "calculateBmi": "ts-node cli/bmiCalculatorCli.ts",
+    "calculateExercises": "ts-node cli/exerciseCalculatorCli.ts"
   },
   "author": "",
   "license": "ISC",

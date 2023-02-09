@@ -3,7 +3,7 @@ export const calculateBmi = (height: number, weight: number): string => {
   if (Number.isNaN(height) || Number.isNaN(weight) ||
       height < 1 || weight < 1)
   {
-    throw new Error('Values must be positive numbers')
+    throw new Error('Positive numbers must be provided for both height and weight')
   }
 
   const bmi : number = roundToOneDecimal(weight / Math.pow(height/100, 2))
@@ -41,19 +41,4 @@ export const determineCategory = (bmi: number): string => {
 
   else // >= 40
     return 'Obese (Class III)'
-
 }
-
-const height: number = parseInt(process.argv[2])
-const weight: number = parseInt(process.argv[3])
-
-console.log(calculateBmi(height, weight))
-
-// Underweight (Severe thinness)	< 16.0
-// Underweight (Moderate thinness)	16.0 – 16.9
-// Underweight (Mild thinness)	17.0 – 18.4
-// Normal range	18.5 – 24.9
-// Overweight (Pre-obese)	25.0 – 29.9
-// Obese (Class I)	30.0 – 34.9
-// Obese (Class II)	35.0 – 39.9
-// Obese (Class III)	≥ 40.0

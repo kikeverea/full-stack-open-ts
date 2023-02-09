@@ -33,7 +33,7 @@ export const calculateExercises = (dailyHours: number[], dailyTarget: number): E
   }
 }
 
-const formatHours = (hours: number[]): number[] =>
+export const formatHours = (hours: number[]): number[] =>
   hours
     .map((hour: number) => Number.isNaN(hour) ? 0 : hour)
     .map((hour: number) => Math.max(0, hour))
@@ -66,19 +66,4 @@ export const ratingDescription = (rating: number): string => {
 
   else // rating === 3
     return 'You have achieved your goal. Well done!'
-}
-
-const hoursLog: number[] = process.argv
-  .slice(2, process.argv.length - 1)
-  .map((input: string) => parseInt(input))
-
-const dailyTarget = parseInt(process.argv[process.argv.length - 1])
-
-try {
-  console.log('Your summary for this period:', formatHours(hoursLog))
-  console.log('With target:', Number.isNaN(dailyTarget) ? 0 : dailyTarget)
-  console.log(calculateExercises(hoursLog, dailyTarget))
-}
-catch (error) {
-  console.log(`Could not create summary. ${ error.message }\n`)
 }
