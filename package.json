@@ -9,15 +9,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
-    "dev" : "ts-node-dev index.ts",
+    "dev": "ts-node-dev index.ts",
     "calculateBmi": "ts-node cli/bmiCalculatorCli.ts",
-    "calculateExercises": "ts-node cli/exerciseCalculatorCli.ts"
+    "calculateExercises": "ts-node cli/exerciseCalculatorCli.ts",
+    "lint": "eslint --ext .ts ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/jest": "^29.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.33.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
