@@ -1,22 +1,9 @@
-export interface ExerciseSummary {
-  periodLength: number,
-  trainingDays: number,
-  target: number,
-  average: number,
-  success: boolean,
-  rating: number,
-  ratingDescription: string
-}
+import { TrainingSummary } from "./calculatorsTypes";
 
-export const calculateExercises = (dailyHours: number[], dailyTarget: number): ExerciseSummary => {
-
-  if (dailyHours.length === 0)
-    throw new Error('A daily hours log must be provided');
-
-  if (dailyTarget === 0)
-    throw new Error('A daily hours target must be provided');
+export const calculateExercises = (dailyHours: number[], dailyTarget: number): TrainingSummary => {
 
   dailyHours = formatHours(dailyHours);
+
   const trainedHours = dailyHours.reduce((aggregate: number, value: number) => aggregate + value);
   const average = trainedHours / dailyHours.length;
   const rating: number = calculateRating(dailyTarget, average);
@@ -31,6 +18,14 @@ export const calculateExercises = (dailyHours: number[], dailyTarget: number): E
     rating: rating,
     ratingDescription: description
   };
+};
+
+export const validateExerciseCalculatorInput = (dailyHours: unknown[], dailyTarget: unknown) => {
+  if (!dailyHours || dailyHours.length === 0)
+    throw new Error('A daily hours log must be provided');
+
+  if (!dailyTarget)
+    throw new Error('A daily hours target must be provided');
 };
 
 export const formatHours = (hours: number[]): number[] =>
