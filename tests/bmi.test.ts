@@ -24,10 +24,16 @@ test('test BMI categories limits', () => {
   testCategory(40, NaN, 'Obese (Class III)')
 })
 
-test('negative input throws error', () => {
-  expect(() => calculateBmi(-1, 100)).toThrow('Values can\'t be less than 1')
-  expect(() => calculateBmi(100, -1)).toThrow('Values can\'t be less than 1')
-  expect(() => calculateBmi(-1, -1)).toThrow('Values can\'t be less than 1')
+test('invalid input throws error', () => {
+  const message: string = 'Values must be positive numbers'
+
+  expect(() => calculateBmi(-1, 100)).toThrowError(message)
+  expect(() => calculateBmi(100, -1)).toThrowError(message)
+  expect(() => calculateBmi(-1, -1)).toThrowError(message)
+
+  expect(() => calculateBmi(NaN, -1)).toThrowError(message)
+  expect(() => calculateBmi(-1, NaN)).toThrowError(message)
+  expect(() => calculateBmi(NaN, NaN)).toThrowError(message)
 })
 
 

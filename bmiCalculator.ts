@@ -1,7 +1,10 @@
 export const calculateBmi = (height: number, weight: number): string => {
 
-  if (height < 1 || weight < 1)
-    throw new Error('Values can\'t be less than 1')
+  if (Number.isNaN(height) || Number.isNaN(weight) ||
+      height < 1 || weight < 1)
+  {
+    throw new Error('Values must be positive numbers')
+  }
 
   const bmi : number = roundToOneDecimal(weight / Math.pow(height/100, 2))
   return determineCategory(bmi)
@@ -41,7 +44,10 @@ export const determineCategory = (bmi: number): string => {
 
 }
 
-console.log(calculateBmi(180, 74))
+const height: number = parseInt(process.argv[2])
+const weight: number = parseInt(process.argv[3])
+
+console.log(calculateBmi(height, weight))
 
 // Underweight (Severe thinness)	< 16.0
 // Underweight (Moderate thinness)	16.0 – 16.9
