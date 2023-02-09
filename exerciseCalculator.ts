@@ -9,6 +9,14 @@ export interface ExerciseSummary {
 }
 
 export const calculateExercises = (dailyHours: number[], dailyTarget: number): ExerciseSummary => {
+
+  if (dailyHours.length === 0)
+    throw new Error('A daily hours log must be provided')
+
+  if (dailyTarget === 0)
+    throw new Error('A daily hours target must be provided')
+
+  dailyHours = formatHours(dailyHours)
   const trainedHours = dailyHours.reduce((aggregate: number, value: number) => aggregate + value)
   const average = trainedHours / dailyHours.length
   const rating: number = calculateRating(dailyTarget, average)
@@ -24,6 +32,11 @@ export const calculateExercises = (dailyHours: number[], dailyTarget: number): E
     ratingDescription: description
   }
 }
+
+const formatHours = (hours: number[]): number[] =>
+  hours
+    .map((hour: number) => Number.isNaN(hour) ? 0 : hour)
+    .map((hour: number) => Math.max(0, hour))
 
 export const calculateRating = (dailyTarget: number, dailyAverage: number): number => {
   const adaptedDaily = Math.min(dailyTarget, dailyAverage)
@@ -55,4 +68,17 @@ export const ratingDescription = (rating: number): string => {
     return 'You have achieved your goal. Well done!'
 }
 
-console.log('Calculate exercises:', calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+const hoursLog: number[] = process.argv
+  .slice(2, process.argv.length - 1)
+  .map((input: string) => parseInt(input))
+
+const dailyTarget = parseInt(process.argv[process.argv.length - 1])
+
+try {
+  console.log('Your summary for this period:', formatHours(hoursLog))
+  console.log('With target:', Number.isNaN(dailyTarget) ? 0 : dailyTarget)
+  console.log(calculateExercises(hoursLog, dailyTarget))
+}
+catch (error) {
+  console.log(`Could not create summary. ${ error.message }\n`)
+}
