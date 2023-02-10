@@ -1,5 +1,5 @@
 {
-  "name": "patientors",
+  "name": "patientor-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,6 +13,7 @@
   "author": "Enrique Verea",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
@@ -21,6 +22,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }
