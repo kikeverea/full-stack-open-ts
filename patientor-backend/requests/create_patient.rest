@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "name": "new patient",
+  "dateOfBirth": "10/02/2023",
+  "ssn": "25698542N",
+  "gender": "male",
+  "occupation": "gypsy"
+}
+
+###
+# Method Request-URI HTTP-Version
+# Header-field: Header-value
+#
+# Request-Body
