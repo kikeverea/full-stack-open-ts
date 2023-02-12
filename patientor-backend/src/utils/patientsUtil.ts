@@ -16,7 +16,8 @@ export const toNewPatient = (params: unknown): NewPatient => {
       dateOfBirth: parseDate(params.dateOfBirth, 'date'),
       ssn: parseString(params.ssn, 'ssn'),
       gender: parseGender(params.gender, 'gender'),
-      occupation: parseString(params.occupation, 'occupation')
+      occupation: parseString(params.occupation, 'occupation'),
+      entries: []
     };
   }
   else

@@ -9,6 +9,15 @@ router.get('/', (_req, res) => {
   res.send(patientsService.getAll());
 });
 
+router.get('/:id', (req, res) => {
+  const patient = patientsService.getById(req.params.id);
+
+  if (!patient)
+    res.status(404).send({ error: 'Not found' });
+
+  res.send(patient);
+});
+
 router.post('/', (req, res) => {
   try {
     const patient: NewPatient = toNewPatient(req.body);
@@ -17,7 +26,7 @@ router.post('/', (req, res) => {
     res.send(created);
   }
   catch (error) {
-    res.status(404).json({ error: parseErrorMessage(error) });
+    res.status(404).send({ error: parseErrorMessage(error) });
   }
 });
 
