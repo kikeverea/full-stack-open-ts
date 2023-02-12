@@ -1,11 +1,9 @@
 import { CoursePart } from './types';
-
+import Part from './Part';
 const Content = ({ courseParts }:{ courseParts: CoursePart[]}): JSX.Element =>
   <>
     { courseParts.map((coursePart: CoursePart) =>
-      <p key={ coursePart.name }>
-        { coursePart.name} {coursePart.exerciseCount }
-      </p>
+      <Part key={ coursePart.name } coursePart={ coursePart }/>
     )}
   </>
 
