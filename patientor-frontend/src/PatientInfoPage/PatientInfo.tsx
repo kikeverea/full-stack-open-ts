@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
-import styled from "@emotion/styled";
 import React from "react";
 import { Gender, Patient } from "../types";
+import { PaddedBox, InfoLine } from "../components/styled";
 import { useParams } from "react-router-dom";
 import { updatePatient, useStateValue } from "../state";
 import axios from "axios";
 import { apiBaseUrl } from "../constants";
+import EntryList from "./EntryList";
 
 const PatientInfo = () => {
 
@@ -52,16 +53,9 @@ const PatientInfo = () => {
         ? <FemaleIcon />
         : null;
 
-  const InfoLine = styled.div`
-    padding: 12px 0 0 0;
-    font-size: 1.1em;
-  `;
-
   return (
     <>
-      <Box sx={{
-        padding: "24px 0 24px 0"
-      }}>
+      <PaddedBox>
         <Typography variant="h4">
           { patient.name }<span style={{ marginLeft: 20 }}>{ genderIcon }</span>
         </Typography>
@@ -71,7 +65,8 @@ const PatientInfo = () => {
         <InfoLine>
           {`occupation: ${ patient.occupation }`}
         </InfoLine>
-      </Box>
+        <EntryList entries={ patient.entries } />
+      </PaddedBox>
     </>
   );
 };
