@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Gender, Patient } from "../types";
 import { useParams } from "react-router-dom";
-import { useStateValue } from "../state";
+import { updatePatient, useStateValue } from "../state";
 import axios from "axios";
 import { apiBaseUrl } from "../constants";
 
@@ -27,12 +27,11 @@ const PatientInfo = () => {
   React.useEffect(() => {
     if(!patient.ssn && id) {
       const fetchPatientInfo = async () => {
-        console.log("Fetching..");
         try {
           const { data: patientInApi } =
             await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
 
-          dispatch({ type: "UPDATE_PATIENT", payload: patientInApi });
+          dispatch(updatePatient(patientInApi));
           setPatient(patientInApi);
         }
         catch (e) {
