@@ -6,10 +6,10 @@ import {
   MenuItem,
   TextField as TextFieldMUI,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Diagnosis, Gender } from "../types";
-import { InputLabel } from "@material-ui/core";
-import Input from '@material-ui/core/Input';
+import { InputLabel } from "@mui/material";
+import Input from "@mui/material/Input";
 
 // structure of a single option
 export type GenderOption = {
@@ -111,7 +111,7 @@ export const DiagnosisSelection = ({
 }) => {
   const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
   const field = "diagnosisCodes";
-  const onChange = (data: string[]) => {    
+  const onChange = (data: string[]) => {
     setDiagnoses([...data]);
     setFieldTouched(field, true);
     setFieldValue(field, selectedDiagnoses);
@@ -124,7 +124,7 @@ export const DiagnosisSelection = ({
   }));
 
   return (
-    <FormControl style={{ width: 552, marginBottom: '30px' }}>
+    <FormControl style={{ width: 552, marginBottom: "30px" }}>
       <InputLabel>Diagnoses</InputLabel>
       <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
         {stateOptions.map((option) => (
