@@ -1,12 +1,10 @@
 import { Entry } from "../types";
 import { Typography } from "@mui/material";
-import { PaddedBox, InfoLine } from "../components/styled";
+import { PaddedBox } from "../components/styled";
 import React from "react";
-import { useStateValue } from "../state";
+import EntryItem from "./EntryItem";
 
 const EntryList = ({ entries }:{ entries: Entry[] | undefined }): JSX.Element => {
-
-  const [{ diagnoses }, ] = useStateValue();
 
   return (
     <PaddedBox>
@@ -17,19 +15,7 @@ const EntryList = ({ entries }:{ entries: Entry[] | undefined }): JSX.Element =>
         ?
         <>
           { entries.map((entry: Entry) =>
-            <div key={ entry.id }>
-              <InfoLine>{`${ entry.date } ${ entry.description }`}</InfoLine>
-              { entry.diagnosisCodes &&
-                <ul>
-                  { entry.diagnosisCodes.map((code: string) => {
-                      const name = diagnoses[code].name;
-                      return <li key={code}>{`${code} - ${ name }`}</li>;
-                  }
-                  )}
-                </ul>
-              }
-            </div>
-          )
+            <EntryItem key={ entry.id } entry={ entry }/>)
           }
         </>
         :
