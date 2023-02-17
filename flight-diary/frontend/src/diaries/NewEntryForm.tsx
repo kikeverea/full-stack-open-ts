@@ -10,33 +10,29 @@ const NewEntryForm = (): JSX.Element => {
   const [visibility, setVisibility] = useState('')
   const [weather, setWeather] = useState('')
   const [comment, setComment] = useState('')
+  const [error, setError] = useState('')
 
   const [, dispatch] = useAppState()
 
   const submit = (action: React.FormEvent) => {
     action.preventDefault()
-    void createNewEntry()
+
+    const newEntry: NewDiaryEntry = {
+      date,
+      visibility: visibility as Visibility,
+      weather: weather as Weather,
+      comment
+    }
 
     setDate('')
     setWeather('')
     setVisibility('')
     setComment('')
+
+    void createNewEntry(newEntry)
   }
 
-  const createNewEntry = async () => {
-    const parsedVisibility = Object.values(Visibility).find(v => v === visibility)
-    const parsedWeather = Object.values(Weather).find(w => w === weather)
-
-    if (!parsedVisibility || !parsedWeather)
-      return
-
-    const newEntry: NewDiaryEntry = {
-      date,
-      visibility: parsedVisibility,
-      weather: parsedWeather,
-      comment
-    }
-
+  const createNewEntry = async (newEntry: NewDiaryEntry) => {
     try {
       const response = await axios.post<DiaryEntry>('http://localhost:3001/api/diaries', newEntry)
       const created: DiaryEntry = response.data
@@ -44,9 +40,10 @@ const NewEntryForm = (): JSX.Element => {
       dispatch(addDiaryEntry(created))
     }
     catch (e) {
-      if (axios.isAxiosError(e)) {
+      if (axios.isAxiosError(e) && e.response) {
         console.log(e.status)
-        console.log(e.message)
+        console.error(e.response)
+        setErrorMessage(e.response.data as string)
       }
       else {
         console.error(e)
@@ -54,34 +51,46 @@ const NewEntryForm = (): JSX.Element => {
     }
   }
 
+  const setErrorMessage = (message: string) => {
+    setError(message)
+    setTimeout(() => {
+      setError('')
+    },
+      5000)
+  }
+
   return (
-    <form onSubmit={ submit }>
-      <div>
-        <label htmlFor='date'>date</label>
-        <input name='date' type='text' value={ date }
-               onChange={ ({ target })=> setDate(target.value)}/>
-      </div>
+    <>
+      <h1>Add new entry</h1>
+      { error && <h3 style={{ color: 'red' }}>{ error }</h3>}
+      <form onSubmit={ submit }>
+        <div>
+          <label htmlFor='date'>date</label>
+          <input name='date' type='text' value={ date }
+                 onChange={ ({ target })=> setDate(target.value)}/>
+        </div>
 
-      <div>
-        <label htmlFor='visibility'>visibility</label>
-        <input name='visibility' type='text' value={ visibility }
-               onChange={ ({ target })=> setVisibility(target.value)}/>
-      </div>
+        <div>
+          <label htmlFor='visibility'>visibility</label>
+          <input name='visibility' type='text' value={ visibility }
+                 onChange={ ({ target })=> setVisibility(target.value)}/>
+        </div>
 
-      <div>
-        <label htmlFor='weather'>weather</label>
-        <input name='weather' type='text' value={ weather }
-               onChange={ ({ target })=> setWeather(target.value)}/>
-      </div>
+        <div>
+          <label htmlFor='weather'>weather</label>
+          <input name='weather' type='text' value={ weather }
+                 onChange={ ({ target })=> setWeather(target.value)}/>
+        </div>
 
-      <div>
-        <label htmlFor='comment'>comment</label>
-        <input name='comment' type='text' value={ comment }
-               onChange={ ({ target })=> setComment(target.value)}/>
-      </div>
+        <div>
+          <label htmlFor='comment'>comment</label>
+          <input name='comment' type='text' value={ comment }
+                 onChange={ ({ target })=> setComment(target.value)}/>
+        </div>
 
-      <input type="submit" value='submit'/>
-    </form>
+        <input type="submit" value='submit'/>
+      </form>
+    </>
   )
 }
 
