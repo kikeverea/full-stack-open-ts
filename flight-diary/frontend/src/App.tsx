@@ -1,24 +1,38 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useEffect } from 'react'
+import axios from 'axios'
+
+import DiaryList from './diaries/DiaryList'
+import { useAppState } from './state/state'
+import { setDiaryEntriesList } from './state/reducer'
+import { DiaryEntry } from './types'
 
 function App() {
+
+  const [, dispatch] = useAppState()
+
+  useEffect(() => {
+    const fetchDiaryEntries = async () => {
+      try {
+        const response = await axios.get<DiaryEntry[]>('http://localhost:3001/api/diaries')
+        dispatch(setDiaryEntriesList(response.data))
+      }
+      catch (e) {
+        if (axios.isAxiosError(e) && e.status && e.response) {
+          console.log(`Failed with status ${ e.status }:`)
+          console.log(e.response)
+        }
+        else {
+          console.error(e)
+        }
+      }
+    }
+    void fetchDiaryEntries()
+  },
+  [dispatch])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DiaryList />
     </div>
   )
 }
