@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 
 import DiaryList from './diaries/DiaryList'
+import NewEntryForm from './diaries/NewEntryForm'
+
 import { useAppState } from './state/state'
 import { setDiaryEntriesList } from './state/reducer'
 import { DiaryEntry } from './types'
@@ -32,6 +34,7 @@ function App() {
 
   return (
     <div className="App">
+      <NewEntryForm />
       <DiaryList />
     </div>
   )

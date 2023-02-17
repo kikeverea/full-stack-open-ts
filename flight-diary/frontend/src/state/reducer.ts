@@ -1,5 +1,5 @@
 import { State } from './state'
-import { NonSensitiveDiaryEntry } from '../types'
+import { DiaryEntry, NonSensitiveDiaryEntry } from '../types'
 
 export type Action =
   | {
@@ -8,7 +8,7 @@ export type Action =
   }
   | {
     type: 'ADD_ENTRY'
-    payload: NonSensitiveDiaryEntry
+    payload: DiaryEntry
   }
   | {
     type: 'UPDATE_ENTRY'
@@ -23,9 +23,17 @@ export const reducer = (state: State, action: Action): State => {
         diaryEntries: action.payload
       }
     case 'ADD_ENTRY':
+      const entry: DiaryEntry = action.payload
+      const nonSensitiveEntry: NonSensitiveDiaryEntry = {
+        id: entry.id,
+        date: entry.date,
+        visibility: entry.visibility,
+        weather: entry.weather
+      }
+
       return {
         ...state,
-        diaryEntries: state.diaryEntries.concat(action.payload)
+        diaryEntries: state.diaryEntries.concat(nonSensitiveEntry)
       }
     case 'UPDATE_ENTRY':
       const toUpdate = action.payload
@@ -39,23 +47,23 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-export const setDiaryEntriesList = (patientList: NonSensitiveDiaryEntry[]): Action => {
+export const setDiaryEntriesList = (entryList: NonSensitiveDiaryEntry[]): Action => {
   return {
     type: 'SET_ENTRIES_LIST',
-    payload: patientList
+    payload: entryList
   }
 }
 
-export const addDiaryEntry = (patient: NonSensitiveDiaryEntry): Action => {
+export const addDiaryEntry = (entry: DiaryEntry): Action => {
   return {
     type: 'ADD_ENTRY',
-    payload: patient
+    payload: entry
   }
 }
 
-export const updateDiaryEntry = (patient: NonSensitiveDiaryEntry): Action => {
+export const updateDiaryEntry = (entry: NonSensitiveDiaryEntry): Action => {
   return {
     type: 'UPDATE_ENTRY',
-    payload: patient
+    payload: entry
   }
 }
