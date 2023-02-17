@@ -1,3 +1,4 @@
+
 const data = [
   {
     "code": "M24.2",
@@ -77,5 +78,6 @@ const data = [
     "latin": "Alia retinopathia proliferativa"
   }
 ];
+
 
 export default data;

@@ -1,0 +1,25 @@
+POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "15/02/2023",
+  "specialist": "Dr. Mario",
+  "description": "A tests entry",
+  "type": "OccupationalHealthcare",
+  "employerName": "FBI",
+  "diagnosisCodes": [
+    "Z-586",
+    "A-35"
+  ],
+  "discharge": {
+    "date": "today",
+    "criteria": "Not sick anymore"
+  },
+  "evilParam": "evil"
+}
+
+###
+# Method Request-URI HTTP-Version
+# Header-field: Header-value
+#
+# Request-Body

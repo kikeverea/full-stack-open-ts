@@ -1,7 +1,7 @@
 import express from 'express';
 import patientsService from '../services/patientsService';
-import { toNewPatient } from '../utils/patientsUtil';
-import { NewPatient, Patient } from '../types';
+import { toNewPatient, toNewEntry } from '../utils/patientsUtil';
+import { Entry, NewEntry, NewPatient, Patient } from '../types';
 
 const router = express.Router();
 
@@ -23,10 +23,22 @@ router.post('/', (req, res) => {
     const patient: NewPatient = toNewPatient(req.body);
     const created: Patient = patientsService.createPatient(patient);
 
-    res.send(created);
+    res.status(201).send(created);
   }
   catch (error) {
-    res.status(404).send({ error: parseErrorMessage(error) });
+    res.status(400).send({ error: parseErrorMessage(error) });
+  }
+});
+
+router.post('/:id/entries', (req, res) => {
+  try {
+    const entry: NewEntry = toNewEntry(req.body);
+    const created: Entry = patientsService.createPatientEntry(req.params.id, entry);
+
+    res.status(201).send(created);
+  }
+  catch (error) {
+    res.status(400).send({ error: parseErrorMessage(error) });
   }
 });
 

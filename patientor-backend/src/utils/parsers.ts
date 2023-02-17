@@ -10,6 +10,16 @@ export const parseString = (text: unknown, fieldName: string): string => {
 const isString = (text: unknown): text is string =>
   typeof text === 'string' || text instanceof String;
 
+export const parseNumber = (num: unknown, fieldName: string): number => {
+  if (!isNumber(num))
+    throw new Error(`Incorrect or missing ${ fieldName }`);
+
+  return num;
+};
+
+const isNumber = (num: unknown): num is number =>
+  typeof num === 'number' || num instanceof Number;
+
 export const parseDate = (date: unknown, fieldName: string): string => {
   if (!isString(date) || !isDate(date))
     throw new Error(`Incorrect or missing ${ fieldName }`);
