@@ -3,6 +3,7 @@ import { useAppState } from '../state/state'
 import { addDiaryEntry } from '../state/reducer'
 import axios from 'axios'
 import { DiaryEntry, NewDiaryEntry, Visibility, Weather } from '../types'
+import RadioButtons from '../components/RadioButtons'
 
 const NewEntryForm = (): JSX.Element => {
 
@@ -66,20 +67,22 @@ const NewEntryForm = (): JSX.Element => {
       <form onSubmit={ submit }>
         <div>
           <label htmlFor='date'>date</label>
-          <input name='date' type='text' value={ date }
+          <input name='date' type='date' value={ date }
                  onChange={ ({ target })=> setDate(target.value)}/>
         </div>
 
         <div>
-          <label htmlFor='visibility'>visibility</label>
-          <input name='visibility' type='text' value={ visibility }
-                 onChange={ ({ target })=> setVisibility(target.value)}/>
+          visibility&emsp;
+          <RadioButtons name='visibility'
+                        values={ Object.values(Visibility) }
+                        onChange={ setVisibility }/>
         </div>
 
         <div>
-          <label htmlFor='weather'>weather</label>
-          <input name='weather' type='text' value={ weather }
-                 onChange={ ({ target })=> setWeather(target.value)}/>
+          weather&emsp;
+          <RadioButtons name='weather'
+                        values={ Object.values(Weather) }
+                        onChange={ setWeather }/>
         </div>
 
         <div>
