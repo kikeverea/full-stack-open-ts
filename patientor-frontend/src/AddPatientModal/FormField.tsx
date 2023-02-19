@@ -112,9 +112,10 @@ export const DiagnosisSelection = ({
   const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
   const field = "diagnosisCodes";
   const onChange = (data: string[]) => {
-    setDiagnoses([...data]);
+    const newData = [...data];
+    setDiagnoses(newData);
     setFieldTouched(field, true);
-    setFieldValue(field, selectedDiagnoses);
+    setFieldValue(field, newData);
   };
 
   const stateOptions = diagnoses.map((diagnosis) => ({
