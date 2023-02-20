@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Button } from "@mui/material";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, SelectField, GenderOption } from "./FormField";
+import { TextField, SelectField } from "./FormField";
 import { Gender, Patient } from "../types";
 
 /*
@@ -10,6 +10,12 @@ import { Gender, Patient } from "../types";
  * because those are irrelevant for new patient object.
  */
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+
+// structure of a single option
+type GenderOption = {
+  value: Gender;
+  label: string;
+};
 
 interface Props {
   onSubmit: (values: PatientFormValues) => void;

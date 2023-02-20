@@ -7,26 +7,22 @@ import {
   TextField as TextFieldMUI,
   Typography,
 } from "@mui/material";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis } from "../types";
 import { InputLabel } from "@mui/material";
 import Input from "@mui/material/Input";
 
-// structure of a single option
-export type GenderOption = {
-  value: Gender;
-  label: string;
-};
-
 // props for select field component
-type SelectFieldProps = {
+type SelectFieldProps<T> = {
   name: string;
   label: string;
-  options: GenderOption[];
+  options: { value: T | string, label: string }[];
 };
 
 const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
 
-export const SelectField = ({ name, label, options }: SelectFieldProps) => (
+export const SelectField: <T extends string | number>(props: SelectFieldProps<T>) => JSX.Element =
+({ name, label, options }) =>
+(
   <>
     <InputLabel>{label}</InputLabel>
     <Field
