@@ -1,4 +1,4 @@
-import { HealthCheckEntry, HealthCheckRating } from "../types";
+import { HealthCheckEntry, HealthCheckRating } from "../../types";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const HealthCheckItem = ({ entry }: { entry: HealthCheckEntry }): JSX.Element => {

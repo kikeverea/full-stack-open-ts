@@ -1,16 +1,16 @@
 import React from "react";
-import { Entry } from "../types";
+import { Entry } from "../../types";
 
 import HealthCheckItem from "./HealthCheckItem";
 import OccupationalHealthcareItem from "./OccupationalHealthcareItem";
 import HospitalItem from "./HospitalItem";
-import { assertNever } from "../utils";
-import { OutlinedBox } from "../components/styled";
+import { assertNever } from "../../utils";
+import { OutlinedBox } from "../../components/styled";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import { InfoLine, Detail } from "../components/styled";
-import { useStateValue } from "../state";
+import { InfoLine, Detail } from "../../components/styled";
+import { useStateValue } from "../../state";
 
 const EntryItem = ({ entry }: { entry: Entry }): JSX.Element => {
 

@@ -1,4 +1,4 @@
-import { HospitalEntry } from "../types";
+import { HospitalEntry } from "../../types";
 
 const HospitalItem = ({ entry }: { entry: HospitalEntry }): JSX.Element =>
   <>

@@ -21,25 +21,28 @@ type SelectFieldProps<T> = {
 const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
 
 export const SelectField: <T extends string | number>(props: SelectFieldProps<T>) => JSX.Element =
-({ name, label, options }) =>
-(
-  <>
-    <InputLabel>{label}</InputLabel>
-    <Field
-      fullWidth
-      style={{ marginBottom: "0.5em" }}
-      label={label}
-      component={FormikSelect}
-      name={name}
-    >
-      {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.label || option.value}
-        </MenuItem>
-      ))}
-    </Field>
-  </>
-);
+({ name, label, options }) => {
+  return (
+    <>
+      <InputLabel>{label}</InputLabel>
+      <Field
+        fullWidth
+        style={{ marginBottom: "0.5em" }}
+        label={label}
+        component={FormikSelect}
+        name={name}
+      >
+        {options && options.map((option) => {
+          return (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label || option.value}
+            </MenuItem>
+          );
+        })}
+      </Field>
+    </>
+  );
+};
 
 interface TextProps extends FieldProps {
   label: string;
@@ -96,16 +99,17 @@ export const NumberField = ({ field, label, min, max }: NumberProps) => {
   );
 };
 
-export const DiagnosisSelection = ({
-  diagnoses,
-  setFieldValue,
-  setFieldTouched,
-}: {
-  diagnoses: Diagnosis[];
-  setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
-  setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
-}) => {
+export const DiagnosisSelection = (
+  { diagnoses, setFieldValue, setFieldTouched}:
+  {
+    diagnoses: Diagnosis[];
+    setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
+    setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
+  }
+) => {
+
   const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
+
   const field = "diagnosisCodes";
   const onChange = (data: string[]) => {
     const newData = [...data];
@@ -123,7 +127,10 @@ export const DiagnosisSelection = ({
   return (
     <FormControl style={{ width: 552, marginBottom: "30px" }}>
       <InputLabel>Diagnoses</InputLabel>
-      <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
+      <Select multiple
+              value={ selectedDiagnoses }
+              onChange={(e) => onChange(e.target.value as string[])} input={<Input />}
+      >
         {stateOptions.map((option) => (
           <MenuItem key={option.key} value={option.value}>
             {option.text}

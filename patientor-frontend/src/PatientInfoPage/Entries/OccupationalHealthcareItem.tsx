@@ -1,5 +1,5 @@
-import { OccupationalHealthcareEntry } from "../types";
-import { InfoLine } from "../components/styled";
+import { OccupationalHealthcareEntry } from "../../types";
+import { InfoLine } from "../../components/styled";
 
 const OccupationalHealthcareItem = ({ entry }: { entry: OccupationalHealthcareEntry }): JSX.Element =>
   <>

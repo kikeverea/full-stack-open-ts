@@ -8,9 +8,9 @@ import { useParams } from "react-router-dom";
 import { updatePatient, useStateValue } from "../state";
 import axios from "axios";
 import { apiBaseUrl } from "../constants";
-import EntryList from "./EntryList";
+import EntryList from "./Entries/EntryList";
 
-const PatientInfo = () => {
+const PatientInfo = (): JSX.Element | null => {
 
   const findPatient = (id: string|undefined): Patient => {
     const found: Patient | null = id ? patients[id] : null;
@@ -44,7 +44,7 @@ const PatientInfo = () => {
   }, []);
 
   if (!patient)
-    return <></>;
+    return null;
 
   const genderIcon =
     patient.gender === Gender.Male
@@ -65,7 +65,7 @@ const PatientInfo = () => {
         <InfoLine>
           {`occupation: ${ patient.occupation }`}
         </InfoLine>
-        <EntryList entries={ patient.entries } />
+        <EntryList patient={ patient } />
       </PaddedBox>
     </>
   );
