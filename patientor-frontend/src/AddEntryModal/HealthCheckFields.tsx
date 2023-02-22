@@ -1,17 +1,16 @@
 import { SelectField } from "../AddPatientModal/FormField";
 import React from "react";
-import { HealthCheckRating } from "../types";
-import { BaseEntryValues } from "./BaseEntryFields";
-import { initialValues as baseInitialValues } from "./BaseEntryFields";
+import { EntryType, HealthCheckRating } from "../types";
+import { BaseEntryValues, initialValues as baseInitialValues } from "./BaseEntryFields";
 
 export interface HealthCheckEntryValues extends BaseEntryValues {
   healthCheckRating: HealthCheckRating;
-  type: "HealthCheck"
+  type: EntryType.HealthCheck
 }
 
 export const initialValues: HealthCheckEntryValues = {
   ...baseInitialValues,
-  type: "HealthCheck",
+  type: EntryType.HealthCheck,
   healthCheckRating: HealthCheckRating.Healthy
 };
 

@@ -4,25 +4,11 @@ import { PaddedBox } from "../../components/styled";
 import React from "react";
 import EntryItem from "./EntryItem";
 import AddEntryModal from "../../AddEntryModal/AddEntryModal";
-import { NewEntryValues } from "../../AddEntryModal/NewEntryForm";
-import entriesService from "../../services/entriesService";
-import { updatePatient, useStateValue } from "../../state";
 
 const EntryList = ({ patient }:{ patient: Patient }): JSX.Element => {
 
-  const [, dispatch] = useStateValue();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error,] = React.useState<string>("");
-
-  const submitNewEntry = async (values: NewEntryValues) => {
-    const created = await entriesService.createNewEntry(patient.id, values);
-
-    if (created) {
-      patient.entries = patient.entries ? [...patient.entries, created] : [created];
-      dispatch(updatePatient(patient));
-    }
-    closeModal();
-  };
 
   const closeModal = () =>
     setModalOpen(false);
@@ -39,7 +25,6 @@ const EntryList = ({ patient }:{ patient: Patient }): JSX.Element => {
       </Stack>
       <AddEntryModal
         modalOpen={ modalOpen }
-        onSubmit={ submitNewEntry }
         error={ error }
         onClose={ closeModal }
       />

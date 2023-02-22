@@ -1,9 +1,10 @@
 import { Field } from "formik";
 import { TextField } from "../AddPatientModal/FormField";
 import React from "react";
+import { EntryType } from "../types";
 
 export interface BaseEntryValues {
-  type: "HealthCheck" | "OccupationalHealthcare" | "Hospital";
+  type: EntryType;
   date: string;
   specialist: string;
   description: string;

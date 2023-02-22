@@ -1,15 +1,14 @@
 import React from "react";
-import { Entry } from "../../types";
+import { Entry, EntryType } from "../../types";
 
 import HealthCheckItem from "./HealthCheckItem";
 import OccupationalHealthcareItem from "./OccupationalHealthcareItem";
 import HospitalItem from "./HospitalItem";
 import { assertNever } from "../../utils";
-import { OutlinedBox } from "../../components/styled";
+import { Detail, InfoLine, OutlinedBox } from "../../components/styled";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import { InfoLine, Detail } from "../../components/styled";
 import { useStateValue } from "../../state";
 
 const EntryItem = ({ entry }: { entry: Entry }): JSX.Element => {
@@ -28,17 +27,17 @@ const EntryItem = ({ entry }: { entry: Entry }): JSX.Element => {
     let entryName: string;
 
     switch (entry.type) {
-      case "HealthCheck":
+      case EntryType.HealthCheck:
         component = <HealthCheckItem entry={ entry }/>;
         icon = <MonitorHeartIcon />;
         entryName = "Health Check";
         break;
-      case "Hospital":
+      case EntryType.Hospital:
         component = <HospitalItem entry={ entry }/>;
         icon = <LocalHospitalIcon />;
         entryName = "Hospital";
         break;
-      case "OccupationalHealthcare":
+      case EntryType.OccupationalHealthcare:
         component = <OccupationalHealthcareItem entry={ entry }/>;
         icon = <MedicalInformationIcon />;
         entryName = "Occupational Healthcare";

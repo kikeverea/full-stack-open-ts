@@ -12,17 +12,19 @@ import EntryList from "./Entries/EntryList";
 
 const PatientInfo = (): JSX.Element | null => {
 
+  const [{ patients }, dispatch] = useStateValue();
+
   const findPatient = (id: string|undefined): Patient => {
     const found: Patient | null = id ? patients[id] : null;
-
-    if (!found)
+    if (!found) {
       throw new Error("Resource not found");
 
+    }
     return found;
+
   };
 
   const { id } = useParams<{ id: string }>();
-  const [{ patients }, dispatch] = useStateValue();
   const [patient, setPatient] = React.useState<Patient>(findPatient(id));
 
   React.useEffect(() => {

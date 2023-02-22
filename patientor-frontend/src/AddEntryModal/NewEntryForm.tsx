@@ -5,38 +5,47 @@ import React from "react";
 import BaseEntryFields from "./BaseEntryFields";
 import { useStateValue } from "../state";
 import { HealthCheckEntryValues } from "./HealthCheckFields";
+import { OccupationalHealthcareEntryValues } from "./OccupationalHealthcareFields";
+import { HospitalEntryValues } from "./HospitalFields";
 
-export type NewEntryValues = HealthCheckEntryValues;
+export type NewEntryValues =
+| HealthCheckEntryValues
+| OccupationalHealthcareEntryValues
+| HospitalEntryValues;
 
 interface Props {
   onSubmit: (values: NewEntryValues) => void;
   onCancel: () => void;
-  entryType: EntryType;
+  entryView: EntryView;
 }
 
-export interface EntryType {
+export interface EntryView {
   fields: JSX.Element;
-  validation: (values: NewEntryValues )=> { [field: string]: string } | null;
+  validation: (values: NewEntryValues) => { [field: string]: string } | null;
   initialValues: NewEntryValues;
 }
 
-const NewEntryForm = ({ onSubmit, onCancel, entryType }: Props): JSX.Element => {
+const NewEntryForm = ({ onSubmit, onCancel, entryView }: Props): JSX.Element => {
   const [{ diagnoses },] = useStateValue();
 
   const validate = (values: NewEntryValues) => {
     const requiredError = "Field is required";
     let errors: { [field: string]: string } = {};
 
-    if (!values.date)
-      errors.name = requiredError;
+    if (!values.date) {
+      errors.date = requiredError;
+    }
+    else if(!Date.parse(values.date)) {
+      errors.date = "Wrong date format (YYYY-MM-DD)";
+    }
 
     if (!values.specialist)
-      errors.ssn = requiredError;
+      errors.specialist = requiredError;
 
     if (!values.description)
-      errors.dateOfBirth = requiredError;
+      errors.description = requiredError;
 
-    const entryTypeError = entryType.validation(values);
+    const entryTypeError = entryView.validation(values);
 
     if (entryTypeError)
       errors = {...errors, ...entryTypeError};
@@ -46,7 +55,7 @@ const NewEntryForm = ({ onSubmit, onCancel, entryType }: Props): JSX.Element => 
 
   return (
     <Formik
-      initialValues={ entryType.initialValues }
+      initialValues={ entryView.initialValues }
       onSubmit={onSubmit}
       validate={validate}
     >
@@ -54,7 +63,7 @@ const NewEntryForm = ({ onSubmit, onCancel, entryType }: Props): JSX.Element => 
         return (
           <Form className="form ui">
             <BaseEntryFields/>
-            { entryType.fields }
+            { entryView.fields }
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
